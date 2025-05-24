@@ -34,16 +34,22 @@
     }
 
     while ($row = $result->fetch()) {
+        $completed = '';
+        if ($row['is_complete']){
+            $completed = ' completed!';
+        } else {
+            $completed = ' not completed!';
+        }
         echo '<div class="card">
         <div class="card-body">
             <h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>
             <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
             <a href="edit.php?id=' . $row['id'] . '" class="btn btn-primary">Edit</a>
             <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger" 
-               onclick="confirm(\'Are you sure you want to delete this task?\')">Delete</a>
+               onclick=" return confirm( \'Are you sure you want to delete this task?\')">Delete</a>
         </div>
         <div class="card-header">
-            Deadline: ' . htmlspecialchars($row['deadline']) . '
+            Deadline: ' . htmlspecialchars($row['deadline']) . " This task is " .$completed .'
         </div>
     </div>';
     }
