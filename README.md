@@ -1,4 +1,4 @@
-📝 Simple Todo App
+#📝 Simple Todo App
 
 This is a simple Todo web application built using HTML, CSS, and PHP. The backend is powered by MySQL for storing users and their todo items.
 
