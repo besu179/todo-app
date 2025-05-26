@@ -100,10 +100,9 @@ todo-app/
 ├── register.php
 ├── dashboard.php
 ├── add_todo.php
-├── delete_todo.php
+├── delete.php
 ├── logout.php
 ├── style.css
-├── config.php
 
 
 ## 💡 Notes
