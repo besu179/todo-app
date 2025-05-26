@@ -7,11 +7,15 @@
     <title>todo-app</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css
 ">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body class="container my-5">
-    <h1>Todo list</h1>
-    <a href="/todo-app/add_task.php" class="btn btn-success">Create new Task</a>
+    <div >
+        <h1>Todo list</h1>
+        <a href="/todo-app/add_task.php" class="btn btn-success">Create new Task</a><br><br>
+    </div>
+
     <?php
 
     $host = "localhost";
@@ -35,23 +39,27 @@
 
     while ($row = $result->fetch()) {
         $completed = '';
-        if ($row['is_complete']){
+        if ($row['is_complete']) {
             $completed = ' completed!';
         } else {
             $completed = ' not completed!';
         }
-        echo '<div class="card">
-        <div class="card-body">
-            <h5 class="card-title">' . htmlspecialchars($row['name']) . '</h5>
-            <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
-            <a href="edit.php?id=' . $row['id'] . '" class="btn btn-primary">Edit</a>
-            <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger" 
-               onclick=" return confirm( \'Are you sure you want to delete this task?\')">Delete</a>
+        echo '<div class="card bg-secondary bg-gradient" >
+        <div class="card-body" style="display: flex; justify-content: space-between;">
+            <div>
+                <h3 class="card-title">' . htmlspecialchars($row['name']) . '</h3>
+                <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
+            </div>
+            <div>
+                <a href="edit.php?id=' . $row['id'] . '" class="btn btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger" 
+                onclick=" return confirm( \'Are you sure you want to delete this task?\')"><i class="fa-solid fa-trash"></i></a>
+            </div>
         </div>
-        <div class="card-header">
-            Deadline: ' . htmlspecialchars($row['deadline']) . " This task is " .$completed .'
+        <div class="card-header font-monospace">
+            Deadline: ' . htmlspecialchars($row['deadline']) . " This task is " . $completed . '
         </div>
-    </div>';
+    </div> <br>';
     }
 
     ?>
