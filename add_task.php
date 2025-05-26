@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <div class="mb-3">
             <button type="submit" class="btn btn-success">Add task</button>
-            <a href="/todo-app/index.php" class="btn btn-outline-secondary">Cancel</a>
+            <a href="index.php" class="btn btn-outline-secondary">Cancel</a>
         </div>
     </form>
 </body>
