@@ -106,10 +106,7 @@ todo-app/
 ├── add_todo.php
 ├── delete_todo.php
 ├── logout.php
-├── css/
-│   └── style.css
-├── db/
-│   └── config.php
+├──  style.css
 ```
 
 ---
