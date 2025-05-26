@@ -79,8 +79,6 @@ CREATE TABLE todos (
 );
 ```
 
-> You can also optionally import a `.sql` file if provided in the project folder.
-
 ---
 
 ## ▶️ Running the App
