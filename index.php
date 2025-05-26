@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,60 +14,70 @@
 </head>
 
 <body class="container my-5">
-    <div >
-        <h1>Todo list</h1>
-        <a href="/todo-app/add_task.php" class="btn btn-success">Create new Task</a><br><br>
-    </div>
 
-    <?php
+    <?php if (isset($_SESSION['user_id'])) : ?>
+        <div>
+            <h1>Todo list</h1><br>
+            <div style="display: flex; justify-content:space-between;">
+                <a href="add_task.php" class="btn btn-success">Create new Task</a>
+                <a href="logout.php" class="btn btn-outline-danger">Logout</a>
+            </div><br><br>
 
-    $host = "localhost";
-    $dbname = "todo_app";
-    $username = "root";
-    $password = "";
+        </div>
 
-    try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die("Database connection failed: " . $e->getMessage());
-    }
+        <?php
 
-    $sql = "SELECT * FROM todos";
-    $result = $pdo->query($sql);
+        $host = "localhost";
+        $dbname = "todo_app";
+        $username = "root";
+        $password = "";
 
-    if (!$result) {
-        die("invalid query" . $pdo->errorCode());
-    }
-
-    while ($row = $result->fetch()) {
-        $completed = '';
-        if ($row['is_complete']) {
-            $completed = ' completed!';
-        } else {
-            $completed = ' not completed!';
+        try {
+            $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Database connection failed: " . $e->getMessage());
         }
-        echo '<div class="card bg-secondary bg-gradient" >
-        <div class="card-body" style="display: flex; justify-content: space-between;">
-            <div>
-                <h3 class="card-title">' . htmlspecialchars($row['name']) . '</h3>
-                <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
-            </div>
-            <div>
-                <a href="edit.php?id=' . $row['id'] . '" class="btn btn"><i class="fa-solid fa-pen-to-square"></i></a>
-                <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger" 
-                onclick=" return confirm( \'Are you sure you want to delete this task?\')"><i class="fa-solid fa-trash"></i></a>
-            </div>
+
+        $sql = "SELECT * FROM todos";
+        $result = $pdo->query($sql);
+
+        if (!$result) {
+            die("invalid query" . $pdo->errorCode());
+        }
+
+        while ($row = $result->fetch()) {
+            $completed = '';
+            if ($row['is_complete']) {
+                $completed = ' completed!';
+            } else {
+                $completed = ' not completed!';
+            }
+            echo '<div class="card bg-secondary bg-gradient" >
+                    <div class="card-body" style="display: flex; justify-content: space-between;">
+                 <div>
+                    <h3 class="card-title">' . htmlspecialchars($row['name']) . '</h3>
+                    <p class="card-text">' . htmlspecialchars($row['description']) . '</p>
+                 </div>
+                 <div>
+                    <a href="edit.php?id=' . $row['id'] . '" class="btn btn"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="delete.php?id=' . $row['id'] . '" class="btn btn-danger" 
+                    onclick=" return confirm( \'Are you sure you want to delete this task?\')"><i class="fa-solid fa-trash"></i></a>
+                    </div>
+                </div>
+                <div class="card-header font-monospace">
+                Deadline: ' . htmlspecialchars($row['deadline']) . " This task is " . $completed . '
+                </div>
+                </div> <br>';
+        }
+
+        ?>
+        <div>
+        <?php else : ?>
+            <h2>you are not logged in.</h2>
+            <a href="signup.html" class="btn btn-outline-primary">Create an account</a> or <a href="login.php" class="btn btn-primary">Login</a>
+        <?php endif; ?>
         </div>
-        <div class="card-header font-monospace">
-            Deadline: ' . htmlspecialchars($row['deadline']) . " This task is " . $completed . '
-        </div>
-    </div> <br>';
-    }
-
-    ?>
-
-
 </body>
 
 </html>
